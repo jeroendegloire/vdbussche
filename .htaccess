@@ -1,0 +1,25 @@
+RewriteEngine on 
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteCond %{HTTP_HOST} !^www\.vdbussche\.be$ [NC]
+RewriteRule ^(.*)$ http://www.vdbussche.be/$1 [R=301,L]
+
+ErrorDocument 404 /error-404.html
+ErrorDocument 403 /error-404.html
+
+#Redirect 301  /diensten/ https://www.vdbussche.be/onze-diensten
+Redirect 301  /polieren-en-semoniseren https://www.vdbussche.be/diensten/polieren-semoniseren
+Redirect 301  /kunststofreparaties https://www.vdbussche.be/diensten/kunststofreparaties
+Redirect 301  /elektronicaherstelling https://www.vdbussche.be/diensten/elektronicaherstelling
+Redirect 301  /richten https://www.vdbussche.be/diensten/richten
+Redirect 301  /uitdeuken-zonder-schilderen https://www.vdbussche.be/diensten/uitdeuken-zonder-schilderen
+Redirect 301  /motorfietsherstellingen https://www.vdbussche.be/diensten/motorfietsherstellingen
+Redirect 301  /velg-reparaties https://www.vdbussche.be/diensten/velgreparaties
+Redirect 301  /autoruit-herstelling-vervanging https://www.vdbussche.be/diensten/autoruitherstelling-vervanging
+Redirect 301  /spot-repair https://www.vdbussche.be/diensten/spot-repair
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html [NC,L]
