@@ -48,7 +48,7 @@ function contactForm()
 	{
 		e.preventDefault();	//STOP default action
 
-		const myForm = event.target;
+		const myForm = e.target;
 		const formData = new FormData(myForm);
 
 		fetch("/", {
