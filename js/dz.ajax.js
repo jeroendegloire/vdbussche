@@ -14,12 +14,6 @@ File : dz.ajax.js
 
 function contactForm()
 {
-
-	document
-		.querySelector("form")
-		.addEventListener("submit", handleSubmit);
-
-
 	window.verifyRecaptchaCallback = function (response) {
         $('input[data-recaptcha]').val(response).trigger('change');
     }
