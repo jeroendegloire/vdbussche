@@ -14,24 +14,11 @@ File : dz.ajax.js
 
 function contactForm()
 {
-	window.verifyRecaptchaCallback = function (response) {
-        $('input[data-recaptcha]').val(response).trigger('change');
-    }
 
-    window.expiredRecaptchaCallback = function () {
-        $('input[data-recaptcha]').val("").trigger('change');
-    }
+	const handleSubmit = (event) => {
+		event.preventDefault();
 
-	'use strict';
-	var msgDiv;
-	$(".dzForm").submit(function(e)
-	{
-		e.preventDefault();	//STOP default action
-		$('.dzFormMsg').html('<div class="gen alert alert-success">Submitting...</div>');
-		var dzFormAction = $(this).attr('action');
-		var dzFormData = $(this).serialize();
-
-		const myForm = e.target;
+		const myForm = event.target;
 		const formData = new FormData(myForm);
 
 		fetch("/", {
@@ -40,6 +27,36 @@ function contactForm()
 			body: new URLSearchParams(formData).toString(),
 		})
 			.then(() => console.log("Form successfully submitted"))
+			.catch((error) => alert(error));
+	};
+
+	document
+		.querySelector("form")
+		.addEventListener("submit", handleSubmit);
+
+
+	window.verifyRecaptchaCallback = function (response) {
+        $('input[data-recaptcha]').val(response).trigger('change');
+    }
+
+    window.expiredRecaptchaCallback = function () {
+        $('input[data-recaptcha]').val("").trigger('change');
+    }
+	'use strict';
+	var msgDiv;
+	$(".dzForm").submit(function(e)
+	{
+		e.preventDefault();	//STOP default action
+
+		const myForm = event.target;
+		const formData = new FormData(myForm);
+
+		fetch("/", {
+			method: "POST",
+			headers: { "Content-Type": "application/x-www-form-urlencoded" },
+			body: new URLSearchParams(formData).toString(),
+		})
+			.then(() => $('.dzFormMsg').html('<div class="gen alert alert-success">Form successfully submitted</div>')
 			.catch((error) => alert(error));
 	});
 	
