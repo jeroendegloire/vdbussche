@@ -15,21 +15,6 @@ File : dz.ajax.js
 function contactForm()
 {
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
-
-		const myForm = event.target;
-		const formData = new FormData(myForm);
-
-		fetch("/", {
-			method: "POST",
-			headers: { "Content-Type": "application/x-www-form-urlencoded" },
-			body: new URLSearchParams(formData).toString(),
-		})
-			.then(() => console.log("Form successfully submitted"))
-			.catch((error) => alert(error));
-	};
-
 	document
 		.querySelector("form")
 		.addEventListener("submit", handleSubmit);
@@ -47,28 +32,20 @@ function contactForm()
 	$(".dzForm").submit(function(e)
 	{
 		e.preventDefault();	//STOP default action
-		$('.dzFormMsg').html('<div class="gen alert alert-success">Verzenden..</div>');
+		$('.dzFormMsg').html('<div class="gen alert alert-success">Submitting...</div>');
 		var dzFormAction = $(this).attr('action');
 		var dzFormData = $(this).serialize();
 
-		// $.ajax({
-		// 	method: "POST",
-		// 	url: dzFormAction,
-		// 	data: dzFormData,
-		// 	dataType: 'json',
-		// 	success: function(dzRes){
-		// 		if(dzRes.status == 1){
-		// 			msgDiv = '<div class="gen alert alert-success">'+dzRes.msg+'</div>';
-		// 		}
-		//
-		// 		if(dzRes.status == 0){
-		// 			msgDiv = '<div class="err alert alert-danger">'+dzRes.msg+'</div>';
-		// 		}
-		// 		$('.dzFormMsg').html(msgDiv);
-		// 		$('.dzForm')[0].reset();
-        //         grecaptcha.reset();
-		// 	}
-		// })
+		const myForm = e.target;
+		const formData = new FormData(myForm);
+
+		fetch("/", {
+			method: "POST",
+			headers: { "Content-Type": "application/x-www-form-urlencoded" },
+			body: new URLSearchParams(formData).toString(),
+		})
+			.then(() => console.log("Form successfully submitted"))
+			.catch((error) => alert(error));
 	});
 	
 	
